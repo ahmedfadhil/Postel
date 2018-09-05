@@ -4,5 +4,10 @@
     <data-source name="db" uuid="3027b48d-fc1d-47e5-89b6-f69af184a1e2">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
     </data-source>
+    <data-source name="Django default" uuid="e674ba05-aad7-4e5d-9da4-0d7a6b616c6e">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <auth-required>false</auth-required>
+      <first-sync>true</first-sync>
+    </data-source>
   </component>
 </project>
