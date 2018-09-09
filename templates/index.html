@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <h1>This is Django</h1>
+<h1>The {{ title }}</h1>
+
+{% for obj in object_list %}
+    <h2>
+        {#        <a href="{% url "detail" id=obj.id %}"> {{ obj.title }}</a><br>#}
+        <a href="{{ obj.get_absolute_url }}"> {{ obj.title }}</a><br>
+        {{ obj.title }}<br>
+        {{ obj.content }}<br>
+        {{ obj.updated }}<br>
+        {{ obj.timestamp }}<br>
+        {{ obj.id }}<br>
+    </h2>
+{% endfor %}
 </body>
 </html>
