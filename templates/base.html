@@ -5,7 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-<h1>This is Django</h1>
+
+<div class="container">
+    {% block content %}
+
 <h1>The {{ title }}</h1>
 
 {% for obj in object_list %}
@@ -19,5 +22,9 @@
         {{ obj.id }}<br>
     </h2>
 {% endfor %}
+
+    {% endblock content %}
+</div>
+
 </body>
 </html>
