@@ -8,8 +8,6 @@ from .forms import PostForm
 
 
 # Create your views here.
-
-
 def post_create(request):
     form = PostForm(request.POST or None)
     if form.is_valid():

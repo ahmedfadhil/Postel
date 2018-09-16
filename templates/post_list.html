@@ -2,18 +2,18 @@
 
 {% block content %}
 
-        <h1>The {{ title }}</h1>
+    <h1>The {{ title }}</h1>
 
-        {% for obj in object_list %}
-            <h2>
-                {#        <a href="{% url "detail" id=obj.id %}"> {{ obj.title }}</a><br>#}
-                <a href="{{ obj.get_absolute_url }}"> {{ obj.title }}</a><br>
-                {{ obj.title }}<br>
-                {{ obj.content }}<br>
-                {{ obj.updated }}<br>
-                {{ obj.timestamp }}<br>
-                {{ obj.id }}<br>
-            </h2>
-        {% endfor %}
+    {% for obj in object_list %}
+        <h2>
+            {#        <a href="{% url "detail" id=obj.id %}"> {{ obj.title }}</a><br>#}
+            <a href="{{ obj.get_absolute_url }}"> {{ obj.title }}</a><br>
+            {{ obj.title }}<br>
+            {{ obj.content }}<br>
+            {{ obj.updated }}<br>
+            {{ obj.timestamp }}<br>
+            {{ obj.id }}<br>
+        </h2>
+    {% endfor %}
 
-    {% endblock content %}
+{% endblock content %}
