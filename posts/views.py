@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404,redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from .forms import PostForm
 
@@ -22,8 +22,6 @@ def post_create(request):
         #     message success
         messages.success(request, "Message successfully created")
         return HttpResponseRedirect(instance.get_absolute_url())
-    else:
-        messages.error(request, "Message was not created!")
     context = {
         "form": form
     }
@@ -55,7 +53,7 @@ def post_list(request):
         context = {
             "title": "Need to login"
         }
-    return render(request, "base.html", context)
+    return render(request, "post_list.html", context)
     # return HttpResponse("<h1>Welcome</h1>")
 
 
