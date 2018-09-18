@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib import messages
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
@@ -40,17 +41,22 @@ def post_detail(request, id):
 
 
 def post_list(request):
-    queryset = Post.objects.all()
+    queryset_list = Post.objects.all()
+    paginator = Paginator(queryset_list, 5)  # Show 25 contacts per page
+    page_request_bar = "page"
+    page = request.GET.get(page_request_bar)
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+    context = {
+        "object_list": queryset,
+        "title": "You're in...",
+        "page_request_bar": page_request_bar
+    }
 
-    if request.user.is_authenticated():
-        context = {
-            "object_list": queryset,
-            "title": "You're in..."
-        }
-    else:
-        context = {
-            "title": "Need to login"
-        }
     return render(request, "post_list.html", context)
     # return HttpResponse("<h1>Welcome</h1>")
 
