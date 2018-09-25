@@ -8,7 +8,11 @@
     {% endblock style %}
 </style>
 {% block content %}
-
+    <div class="col-sm-6 col-sm-offset-3">
+        {% if instance.image %}
+            <img src='{{ instance.image.url }}'>
+        {% endif %}
+    </div>
     <h1>This is post detail</h1>
     <h1>The {{ title }}</h1>
 
