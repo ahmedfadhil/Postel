@@ -2,17 +2,23 @@
 from __future__ import unicode_literals
 from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from .forms import PostForm
+from urllib import quote_plus
 
 
 # Create your views here.
 def post_create(request):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
+    if not request.user.is_authenticated():
+        raise Http404
     form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         instance = form.save(commit=False)
+        instance.user = request.user
         print(form.cleaned_data.get("title"))
         instance.save()
         # if request.method == "POST":
@@ -30,9 +36,12 @@ def post_create(request):
 def post_detail(request, id):
     # instance = Post.objects.get(id=1)
     instance = get_object_or_404(Post, id=id)
+
+    share_string = quote_plus(instance.content)
     context = {
         "title": instance.title,
-        "instance": instance
+        "instance": instance,
+        "share_string": share_string,
     }
 
     # return HttpResponse("<h1>Detail</h1>")
@@ -62,6 +71,8 @@ def post_list(request):
 
 
 def post_update(request, id=None):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
     # instance = Post.objects.get(id=1)
     instance = get_object_or_404(Post, id=id)
     form = PostForm(request.POST or None, request.FILES or None, instance=instance)
@@ -88,6 +99,8 @@ def post_update(request, id=None):
 
 
 def post_delete(request, id=None):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
     # instance = Post.objects.get(id=1)
     instance = get_object_or_404(Post, id=id)
     instance.delete()
