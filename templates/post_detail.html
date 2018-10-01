@@ -21,13 +21,16 @@
         <p>Author: {{ instance.user.get_full_name }}</p>
     {% endif %}
 
+    <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard"
+         data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+
 
     <h2>
         {{ instance.title }}<br>
         {{ instance.title }}<br>
         {{ instance.content |truncatechars:20|urlify }}<br>
         {{ instance.updated }}<br>
-        {{ instance.timestamp }}<br>
+        {% if instance.draft %}<span style="color: red">Draft</span>{% endif %}{{ instance.publish }}<br>
         {{ instance.id }}<br>
     </h2>
 
@@ -50,4 +53,11 @@
     <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ instance.title }}>Share
         on Reddit</a>
 
+
+
+<div class=" fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+
+
 {% endblock content %}
+
+
