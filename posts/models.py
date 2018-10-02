@@ -5,6 +5,12 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
+from django.utils import timezone
+
+
+class PostManager(models.Manager):
+    def active(self, *args, **kwargs):
+        return super(PostManager, self).filter(draft=False).filter(publish_lte=timezone.now())
 
 
 # Create your models here.
@@ -28,6 +34,8 @@ class Post(models.Model):
     publish = models.DateField(auto_now=False, auto_now_add=False)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
+
+    objects = PostManager()
 
     def __unicode__(self):
         return self.title
